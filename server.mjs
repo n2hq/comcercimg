@@ -3,12 +3,43 @@ import express from 'express';
 import cors from 'cors';
 import multer from 'multer';
 import path from 'path';
-import { pool } from './db.js';
+//import { pool } from './db.js';
 import { fileURLToPath } from 'url';
 import fs from 'fs/promises';
+import dotenv from 'dotenv';
+import mysql from 'mysql2/promise';
+
 
 const app = express();
-const port = 3555;
+//const port = 3555;
+const port = process.env.PORT || 3555;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const envFile = process.env.NODE_ENV === 'production' ? '.env.prod' : '.env.dev';
+dotenv.config({ path: path.resolve(__dirname, envFile) });
+
+const DATABASE_HOST = process.env.DATABASE_HOST
+const DATABASE_PORT = process.env.DATABASE_PORT
+const DATABASE_NAME = process.env.DATABASE_NAME
+const DATABASE_PASS = process.env.DATABASE_PASS
+const DATABASE_USER = process.env.DATABASE_USER
+
+export const pool = mysql.createPool({
+    host: DATABASE_HOST,
+    user: DATABASE_USER,
+    password: DATABASE_PASS,
+    port: Number(DATABASE_PORT) || 3306,
+    database: DATABASE_NAME,
+    waitForConnections: true,
+    connectionLimit: 10,
+});
+
+console.log('PORT:', process.env.DATABASE_PORT);
+console.log('DATABASE_USER:', process.env.DATABASE_USER);
+
+
 
 app.use(cors({
     origin: '*',
@@ -59,9 +90,6 @@ const businessGalleryPics = multer.diskStorage({
 const userProfilePicUpload = multer({ storage: userProfilePics });
 const businessProfilePicUpload = multer({ storage: businessProfilePics });
 const businessGalleryPicUpload = multer({ storage: businessGalleryPics });
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 
 app.use('/user_profile_pics', express.static(path.join(__dirname, 'user_profile_pics')));
@@ -499,5 +527,5 @@ app.get("/", (req, res) => {
 
 // Start the server
 app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
+    console.log(`Server is running at http://localhost:${port} on ${process.env.NODE_ENV}`);
 });
