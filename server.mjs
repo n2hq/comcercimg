@@ -12,7 +12,7 @@ import mysql from 'mysql2/promise';
 
 const app = express();
 //const port = 3555;
-const port = process.env.PORT || 3555;
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -25,6 +25,8 @@ const DATABASE_PORT = process.env.DATABASE_PORT
 const DATABASE_NAME = process.env.DATABASE_NAME
 const DATABASE_PASS = process.env.DATABASE_PASS
 const DATABASE_USER = process.env.DATABASE_USER
+
+const port = process.env.PORT || 3555;
 
 export const pool = mysql.createPool({
     host: DATABASE_HOST,
