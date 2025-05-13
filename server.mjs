@@ -259,7 +259,7 @@ app.post('/business_profile_pic_upload', businessProfilePicUpload.single('file')
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Database save failed' });
+        res.status(500).json({ message: error.message });
     }
 });
 
