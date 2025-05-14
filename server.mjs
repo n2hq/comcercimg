@@ -110,7 +110,8 @@ app.post('/user_profile_pic_upload', userProfilePicUpload.single('file'), async 
         return res.status(405).json({ message: 'No file uploaded' });
     }
 
-    const fileUrl = `${process.env.SITE_BASE_URL}/user_profile_pics/${req.file.filename}`;
+    //const fileUrl = `${process.env.SITE_BASE_URL}/user_profile_pics/${req.file.filename}`;
+    const fileUrl = `/user_profile_pics/${req.file.filename}`;
     const originalName = req.file.filename;
     const mimeType = req.file.mimetype;
     const userGuid = guid
@@ -202,7 +203,7 @@ app.post('/business_profile_pic_upload', businessProfilePicUpload.single('file')
         return res.status(405).json({ message: 'No file uploaded' });
     }
 
-    const fileUrl = `${process.env.SITE_BASE_URL}/business_profile_pics/${req.file.filename}`;
+    const fileUrl = `/business_profile_pics/${req.file.filename}`;
     const originalName = req.file.filename;
     const mimeType = req.file.mimetype;
     const userGuid = guid
@@ -304,7 +305,7 @@ app.post('/business_gallery_pic_upload', businessGalleryPicUpload.single('file')
         return res.status(405).json({ message: 'No file uploaded' });
     }
 
-    const fileUrl = `${process.env.SITE_BASE_URL}/business_gallery_pics/${req.file.filename}`;
+    const fileUrl = `/business_gallery_pics/${req.file.filename}`;
     const originalName = req.file.filename;
     const mimeType = req.file.mimetype;
     const userGuid = guid
@@ -384,7 +385,7 @@ app.post('/business_gallery_pic_update', businessGalleryPicUpload.single('file')
         imageTitle = req.body.image_title || "" //|| existingImageRecord[0].image_title
     } else {
         {/** save new image with title */ }
-        fileUrl = `${process.env.SITE_BASE_URL}/business_gallery_pics/${req.file.filename}`;
+        fileUrl = `/business_gallery_pics/${req.file.filename}`;
         originalName = req.file.filename
         mimeType = req.file.mimetype;
         imageTitle = req.body.image_title
