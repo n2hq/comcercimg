@@ -43,15 +43,12 @@ console.log('DATABASE_USER:', process.env.DATABASE_USER);
 
 
 
-/* app.use(cors({
+app.use(cors({
     origin: '*',
     credentials: true
 }));
- */
-app.use(cors({
-    origin: 'https://tynk.cc',
-    credentials: true,
-}));
+
+
 
 
 // Storage config
